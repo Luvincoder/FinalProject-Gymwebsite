@@ -1,0 +1,78 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #121212; /* Dark background similar to Shop page */
+  }
+  
+  .login-form {
+    background-color: #1c1c1c; /* Dark form background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Darker shadow */
+    width: 300px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .login-form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #e0e0e0; /* Light text color for contrast */
+  }
+  
+  .login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #3a3a3a; /* Darker border */
+    border-radius: 4px;
+    background-color: #2b2b2b; /* Input field background */
+    color: #e0e0e0; /* Light text color */
+    transition: border 0.3s ease;
+  }
+  
+  .login-form input:focus {
+    border-color: #ff2625; /* Red border on focus */
+    outline: none;
+  }
+  
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff2625; /* Consistent red color */
+    border: none;
+    color: #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-form button:hover {
+    background-color: #e6201d; /* Darker red on hover */
+  }
+  
+  .toggle-link {
+    margin-top: 10px;
+    text-align: center;
+    color: #ff2625; /* Red color for toggle link */
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .toggle-link:hover {
+    color: #e6201d; /* Darker red on hover */
+  }
+  
+  .error-message {
+    color: #ff0000; /* Red color for error message */
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .success-message {
+    color: #28a745; /* Green color for success message */
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
