@@ -1,5 +1,3 @@
-// server.js
-
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
@@ -12,6 +10,23 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json()); // Parse JSON bodies
+
+// Middleware to verify JWT Token
+const verifyToken = (req, res, next) => {
+  const token = req.headers["authorization"];
+  
+  if (!token) {
+    return res.status(403).json({ error: "Access denied, token missing!" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next(); // Proceed to the next middleware or route handler
+  } catch (err) {
+    res.status(401).json({ error: "Invalid token" });
+  }
+};
 
 // User registration route
 app.post("/register", async (req, res) => {
@@ -45,7 +60,7 @@ app.post("/register", async (req, res) => {
       user: newUser.rows[0],
     });
   } catch (err) {
-    console.error("Server error:", err.message);
+    console.error("Error registering user:", err.message);
     res.status(500).json({ error: "Server error", details: err.message });
   }
 });
@@ -81,16 +96,23 @@ app.post("/login", async (req, res) => {
 
     res.json({ message: "Login successful!", token });
   } catch (err) {
-    console.error("Server error:", err.message);
+    console.error("Error during login:", err.message);
     res.status(500).json({ error: "Server error", details: err.message });
   }
 });
 
-// Example protected route
-app.get("/protected", (req, res) => {
-  res.json({ message: "This is a protected route" });
+// Example protected route (Requires JWT token)
+app.get("/protected", verifyToken, (req, res) => {
+  res.json({ message: `This is a protected route for user ID ${req.user.id}` });
 });
 
+// Global error-handling middleware (optional but recommended)
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err.message);
+  res.status(500).json({ error: "Something went wrong, please try again later." });
+});
+
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
